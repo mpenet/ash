@@ -1,9 +1,11 @@
 (ns ash.bot
-  (:require [clojure.string :as string]
-            [clojure.tools.logging :as log])
-  (:import [org.pircbotx PircBotX User Channel]
-           [org.pircbotx.hooks ListenerAdapter Event]
-           [org.pircbotx.hooks.events MessageEvent]))
+  (:require
+   [clojure.string :as string]
+   [clojure.tools.logging :as log])
+  (:import
+   [org.pircbotx PircBotX User Channel]
+   [org.pircbotx.hooks ListenerAdapter Event]
+   [org.pircbotx.hooks.events MessageEvent]))
 
 (defn join-channels
   [^PircBotX bot channels]
