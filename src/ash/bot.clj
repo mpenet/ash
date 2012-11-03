@@ -29,10 +29,10 @@
       (.sendMessage bot
                     target
                     (format-message m :prefix? prefix?)))
-      (.sendMessage bot
-                    target
-                    (format-message message :prefix? prefix?)))
-    bot)
+    (.sendMessage bot
+                  target
+                  (format-message message :prefix? prefix?)))
+  bot)
 
 (defn disconnect
   [^PircBotX bot]
@@ -87,7 +87,7 @@
 
 (defn auto-reconnect
   [^PircBotX bot channels & {:keys [max-tries]
-                   :or {max-tries 5}}]
+                             :or {max-tries 5}}]
   (let [reconnect-fn #(try (reconnect bot)
                            (join-channels bot channels)
                            (catch Exception _ nil))]
