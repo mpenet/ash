@@ -31,9 +31,8 @@ works with grove.io and that is stupidly simple and extensible.
                   :password "1234"
                   :host "meh.irc.grove.io"
                   :port 6667
-                  :channels ["#foo" "#bar"])
-    (irc/join-channels (:channels config))
-    (irc/auto-reconnect :channels (:channels config))
+                  :channels ["#foo" "#bar"]
+                  :auto-reconnect true)
     (plugin-clojure/handler))
 ```
 

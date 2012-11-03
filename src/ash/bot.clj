@@ -5,20 +5,6 @@
            [org.pircbotx.hooks ListenerAdapter]
            [org.pircbotx.hooks.events MessageEvent]))
 
-(defn make-bot
-  [& {:keys [nick name password host port server-password messages-delay]
-      :or {nick "ash" name "ash" port 6667 messages-delay 1000}
-      :as options}]
-  (log/info options)
-  (let [bot (PircBotX.)]
-    (.setName bot nick)
-    (.setLogin bot name)
-    (.setMessageDelay bot messages-delay)
-    (.connect bot host port server-password)
-    (when password
-      (.identify bot password))
-    bot))
-
 (defn join-channels
   [bot channels]
   (log/info (format "join %s" channels))
@@ -86,8 +72,8 @@
                        (handler event))))))
 
 (defn auto-reconnect
-  [bot & {:keys [channels max-tries]
-          :or {max-tries 5}}]
+  [bot channels & {:keys [max-tries]
+                   :or {max-tries 5}}]
   (let [reconnect-fn #(try (reconnect bot)
                            (join-channels bot channels)
                            (catch Exception _ nil))]
@@ -98,3 +84,26 @@
                            (pos? times))
                   (recur (dec times)))))))
   bot)
+
+(defn make-bot
+  [& {:keys [nick name password host port server-password messages-delay
+             channels auto-reconnect]
+      :or {nick "ash"
+           name "ash"
+           port 6667
+           messages-delay 1000
+           auto-reconnect true}
+      :as options}]
+  (log/info options)
+  (let [bot (PircBotX.)]
+    (.setName bot nick)
+    (.setLogin bot name)
+    (.setMessageDelay bot messages-delay)
+    (.connect bot host port server-password)
+    (when password
+      (.identify bot password))
+    (when channels
+      (join-channels bot channels))
+    (when auto-reconnect
+      (ash.bot/auto-reconnect bot channels))
+    bot))
