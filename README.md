@@ -21,18 +21,20 @@ works with grove.io and that is stupidly simple and extensible.
 ## Usage
 
 ```clojure
-(require [ash.bot :as irc]
-         [ash.plugins.clojure :as plugin-clojure])
-    (-> (irc/make-bot :server-password "meh"
-                      :nick "just-a-bot"
-                      :name "just-a-bot"
-                      :password "1234"
-                      :host "meh.irc.grove.io"
-                      :port 6667
-                      :channels ["#foo" "#bar"])
-        (irc/join-channels (:channels config))
-        (irc/auto-reconnect :channels (:channels config))
-        (plugin-clojure/handler))
+(require
+  [ash.bot :as irc]
+  [ash.plugins.clojure :as plugin-clojure])
+
+(-> (irc/make-bot :server-password "meh"
+                  :nick "just-a-bot"
+                  :name "just-a-bot"
+                  :password "1234"
+                  :host "meh.irc.grove.io"
+                  :port 6667
+                  :channels ["#foo" "#bar"])
+    (irc/join-channels (:channels config))
+    (irc/auto-reconnect :channels (:channels config))
+    (plugin-clojure/handler))
 ```
 
 ## License
