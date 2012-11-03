@@ -30,9 +30,9 @@ works with grove.io and that is stupidly simple and extensible.
                       :host "meh.irc.grove.io"
                       :port 6667
                       :channels ["#foo" "#bar"])
-    (irc/join-channels (:channels config))
-    (irc/auto-reconnect :channels (:channels config))
-    (plugin-clojure/handler))
+        (irc/join-channels (:channels config))
+        (irc/auto-reconnect :channels (:channels config))
+        (plugin-clojure/handler))
 ```
 
 ## License
