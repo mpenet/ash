@@ -28,5 +28,5 @@
                 (when-let [t (second (re-find #"^\?i\W+(.+)" (:content m)))]
                   (irc/send-message bot
                                     (:channel m)
-                                    (ask-google t)
+                                    (search t)
                                     true)))))
