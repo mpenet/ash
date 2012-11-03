@@ -23,8 +23,8 @@ works with grove.io and that is stupidly simple and extensible.
 ```clojure
 (require
   [ash.bot :as irc]
-  [ash.plugins.clojure :as plugin-clojure]
-  [ash.plugins.google :as plugin-google])
+  [ash.plugins.clojure :as clj]
+  [ash.plugins.google :as goog])
 
 (-> (irc/make-bot :server-password "meh"
                   :nick "just-a-bot"
@@ -34,8 +34,8 @@ works with grove.io and that is stupidly simple and extensible.
                   :port 6667
                   :channels ["#foo" "#bar"]
                   :auto-reconnect true)
-    plugin-clojure/handler
-    plugin-google/handler)
+    clj/handler
+    goog/handler)
 ```
 
 ## License
