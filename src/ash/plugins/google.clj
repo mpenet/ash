@@ -18,8 +18,8 @@
 (defn handler [bot]
   (irc/listen bot :on-message
               (fn [m _]
-                (when (re-find #"^\?.+" (:content m))
+                (when-let [t (second (re-find #"^\?g\W+(.+)" (:content m)))]
                   (irc/send-message bot
                                     (:channel m)
-                                    (ask-google (.substring (:content m) 1))
+                                    (ask-google t)
                                     true)))))
