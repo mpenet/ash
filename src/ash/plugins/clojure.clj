@@ -37,4 +37,5 @@
                   (re-find #"^," (:content m))
                   (irc/send-message bot
                                     (:channel m)
-                                    (exec m))))))
+                                    (exec m)
+                                    true)))))

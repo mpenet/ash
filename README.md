@@ -15,7 +15,7 @@ works with grove.io and that is stupidly simple and extensible.
 ## Installation
 
 ```clojure
-[cc.qbits/ash "0.0.1-SNAPSHOT"]
+[cc.qbits/ash "0.1.0-SNAPSHOT"]
 ```
 
 ## Usage

@@ -17,26 +17,28 @@
   (->> bot .getChannelsNames (into #{})))
 
 (defn send-message
-  [bot target message]
-  (log/info (format "send %s %s" target message))
-  (.sendMessage bot target (str message))
-  bot)
+  ([bot target message]
+     (log/info (format "send %s %s" target message))
+     (.sendMessage bot target (str message))
+     bot)
+  ([bot target message safe?]
+     (send-message bot target (str "⇒ " message))))
 
 (defn disconnect
   [bot]
-  (log/info (format "disconnect"))
+  (log/info "disconnect")
   (.disconnect bot)
   bot)
 
 (defn reconnect
   [bot]
-  (log/info (format "reconnect"))
+  (log/info "reconnect")
   (.reconnect bot)
   bot)
 
 (defn shutdown
   [bot]
-  (log/info (format "shutdown"))
+  (log/info "shutdown")
   (.shutdown bot)
   bot)
 
@@ -62,14 +64,16 @@
                      (onMessage [event]
                        (let [message (format-message event)]
                          (handler message (fn [response]
-                                            (respond event response)))))))))
+                                            (respond event response))))))))
+  bot)
 
 (defmethod listen :on-disconnect
   [bot _ handler]
   (.. bot getListenerManager
       (addListener (proxy [ListenerAdapter] []
                      (onDisconnect [event]
-                       (handler event))))))
+                       (handler event)))))
+  bot)
 
 (defn auto-reconnect
   [bot channels & {:keys [max-tries]
@@ -94,7 +98,6 @@
            messages-delay 1000
            auto-reconnect true}
       :as options}]
-  (log/info options)
   (let [bot (PircBotX.)]
     (.setName bot nick)
     (.setLogin bot name)
