@@ -14,7 +14,8 @@
       (.html)
       (.replaceAll "&gt;" ">")
       (.replaceAll "&lt;" "<")
-      (.split "<br /> ")
+      (.split "<br />")
+      (#(map clojure.string/trim %))
       seq))
 
 (defn handler [bot]
