@@ -25,7 +25,7 @@
 (defn handler [bot]
   (irc/listen bot :on-message
               (fn [m _]
-                (when-let [t (second (re-find #"^\?g\W+(.+)" (:content m)))]
+                (when-let [t (second (re-find #"^\?i\W+(.+)" (:content m)))]
                   (irc/send-message bot
                                     (:channel m)
                                     (ask-google t)
