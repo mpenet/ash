@@ -16,10 +16,11 @@
   [bot]
   (->> bot .getChannelsNames (into #{})))
 
-(defn format-message [message & {:keys [prefix?]}]
+(defn format-message
+  [message & {:keys [prefix?]}]
   (if prefix?
-      (str "⇒ " message)
-      message))
+    (str "⇒ " message)
+    message))
 
 (defn send-message
   [bot target message & [prefix?]]
