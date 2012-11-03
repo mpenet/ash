@@ -23,7 +23,8 @@ works with grove.io and that is stupidly simple and extensible.
 ```clojure
 (require
   [ash.bot :as irc]
-  [ash.plugins.clojure :as plugin-clojure])
+  [ash.plugins.clojure :as plugin-clojure]
+  [ash.plugins.google :as plugin-google])
 
 (-> (irc/make-bot :server-password "meh"
                   :nick "just-a-bot"
