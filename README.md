@@ -1,6 +1,6 @@
 # Ash
 
-<img src="https://github.com/downloads/mpenet/ash/logo.png"
+<img src="http://cloud.github.com/downloads/mpenet/ash/logo.jpg"
  alt="Cute bot" title="Cute bot" align="right" />
 
 > It's a robot. Ash is a god damn robot!
@@ -16,7 +16,6 @@ works with grove.io and that is stupidly simple and extensible.
 
 ```clojure
 [cc.qbits/ash "0.0.1-SNAPSHOT"]
-
 ```
 
 ## Usage
