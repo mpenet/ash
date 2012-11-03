@@ -33,7 +33,8 @@ works with grove.io and that is stupidly simple and extensible.
                   :port 6667
                   :channels ["#foo" "#bar"]
                   :auto-reconnect true)
-    (plugin-clojure/handler))
+    plugin-clojure/handler
+    plugin-google/handler)
 ```
 
 ## License
