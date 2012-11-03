@@ -22,7 +22,10 @@
      (.sendMessage bot target (str message))
      bot)
   ([bot target message safe?]
-     (send-message bot target (str "⇒ " message))))
+     (send-message bot target
+                   (if safe?
+                     (str "⇒ " message)
+                     message))))
 
 (defn disconnect
   [bot]
