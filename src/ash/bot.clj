@@ -1,55 +1,59 @@
 (ns ash.bot
   (:require [clojure.string :as string]
             [clojure.tools.logging :as log])
-  (:import [org.pircbotx PircBotX]
-           [org.pircbotx.hooks ListenerAdapter]
+  (:import [org.pircbotx PircBotX User Channel]
+           [org.pircbotx.hooks ListenerAdapter Event]
            [org.pircbotx.hooks.events MessageEvent]))
 
 (defn join-channels
-  [bot channels]
+  [^PircBotX bot channels]
   (log/info (format "join %s" channels))
   (doseq [chan channels]
     (.joinChannel bot chan))
   bot)
 
 (defn channels
-  [bot]
+  [^PircBotX bot]
   (->> bot .getChannelsNames (into #{})))
 
 (defn format-message
-  [message & {:keys [prefix?]}]
+  ^String [message & {:keys [prefix?]}]
   (if prefix?
     (str "⇒ " message)
     message))
 
 (defn send-message
-  [bot target message & [prefix?]]
+  [^PircBotX bot ^String target message & [prefix?]]
   (if (sequential? message)
     (doseq [m message]
-      (.sendMessage bot target (format-message m :prefix? prefix?)))
-      (.sendMessage bot target (format-message message :prefix? prefix?)))
+      (.sendMessage bot
+                    target
+                    (format-message m :prefix? prefix?)))
+      (.sendMessage bot
+                    target
+                    (format-message message :prefix? prefix?)))
     bot)
 
 (defn disconnect
-  [bot]
+  [^PircBotX bot]
   (log/info "disconnect")
   (.disconnect bot)
   bot)
 
 (defn reconnect
-  [bot]
+  [^PircBotX bot]
   (log/info "reconnect")
   (.reconnect bot)
   bot)
 
 (defn shutdown
-  [bot]
+  [^PircBotX bot]
   (log/info "shutdown")
   (.shutdown bot)
   bot)
 
 (defn make-message
-  [event]
+  [^MessageEvent event]
   {:user (.. event getUser getNick)
    :channel (.. event getChannel getName)
    :timestamp (.getTimestamp event)
@@ -58,13 +62,13 @@
 (defn respond
   [event message]
   (doseq [part (string/split message #"\n")]
-    (.respond event part)))
+    (.respond ^Event event part)))
 
 (defmulti listen (fn [bot listener-type & more]
                    listener-type))
 
 (defmethod listen :on-message
-  [bot _ handler]
+  [^PircBotX bot _ handler]
   (.. bot getListenerManager
       (addListener (proxy [ListenerAdapter] []
                      (onMessage [event]
@@ -74,7 +78,7 @@
   bot)
 
 (defmethod listen :on-disconnect
-  [bot _ handler]
+  [^PircBotX bot _ handler]
   (.. bot getListenerManager
       (addListener (proxy [ListenerAdapter] []
                      (onDisconnect [event]
@@ -82,7 +86,7 @@
   bot)
 
 (defn auto-reconnect
-  [bot channels & {:keys [max-tries]
+  [^PircBotX bot channels & {:keys [max-tries]
                    :or {max-tries 5}}]
   (let [reconnect-fn #(try (reconnect bot)
                            (join-channels bot channels)
@@ -108,7 +112,10 @@
     (.setName bot nick)
     (.setLogin bot name)
     (.setMessageDelay bot messages-delay)
-    (.connect bot host port server-password)
+    (.connect bot
+              ^String host
+              (int port)
+              ^String server-password)
     (when password
       (.identify bot password))
     (when channels
