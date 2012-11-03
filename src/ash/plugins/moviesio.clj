@@ -7,14 +7,15 @@
   [title]
   (or (->> (client/get "http://api.movies.io/movies/search"
                    {:query-params {"q" title}
+                    :throw-exceptions false
                     :as :json})
        :body :movies first
-       ((fn [{:keys [title year id]}]
-          (format "%s (%s): http://movies.io/m/%s"
-                  title year id))))
-      (format "No result for %" title)))
-
-(prn (search-movie "brick"))
+       ((fn [{:keys [title year id]
+              :as movie}]
+          (when movie
+            (format "%s (%s): http://movies.io/m/%s"
+                    title year id)))))
+      (format "No result for %s" title)))
 
 (defn handler [bot]
   (irc/listen bot :on-message

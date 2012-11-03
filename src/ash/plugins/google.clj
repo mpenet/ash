@@ -13,7 +13,7 @@
        :results
        first
        :unescapedUrl)
-      (format "No result for %" term)))
+      (format "No result for %s" term)))
 
 (defn handler [bot]
   (irc/listen bot :on-message
