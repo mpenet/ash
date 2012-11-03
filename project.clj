@@ -6,4 +6,5 @@
 
                  ;; plugins deps
                  [clojail "1.0.3"]
-                 [clj-http "0.5.7"]])
+                 [clj-http "0.5.7"]
+                 [org.jsoup/jsoup "1.6.3"]])

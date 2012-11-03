@@ -16,16 +16,18 @@
   [bot]
   (->> bot .getChannelsNames (into #{})))
 
+(defn format-message [message & {:keys [prefix?]}]
+  (if prefix?
+      (str "⇒ " message)
+      message))
+
 (defn send-message
-  ([bot target message]
-     (log/info (format "send %s %s" target message))
-     (.sendMessage bot target (str message))
-     bot)
-  ([bot target message safe?]
-     (send-message bot target
-                   (if safe?
-                     (str "⇒ " message)
-                     message))))
+  [bot target message & [prefix?]]
+  (if (sequential? message)
+    (doseq [m message]
+      (.sendMessage bot target (format-message m :prefix? prefix?)))
+      (.sendMessage bot target (format-message message :prefix? prefix?)))
+    bot)
 
 (defn disconnect
   [bot]
@@ -45,7 +47,7 @@
   (.shutdown bot)
   bot)
 
-(defn format-message
+(defn make-message
   [event]
   {:user (.. event getUser getNick)
    :channel (.. event getChannel getName)
@@ -65,7 +67,7 @@
   (.. bot getListenerManager
       (addListener (proxy [ListenerAdapter] []
                      (onMessage [event]
-                       (let [message (format-message event)]
+                       (let [message (make-message event)]
                          (handler message (fn [response]
                                             (respond event response))))))))
   bot)
