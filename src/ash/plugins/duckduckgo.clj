@@ -14,7 +14,7 @@
        :Results
        first
        ((fn [{text :Text url :FirstURL}]
-          (format "%s : %s" text url))))
+          (when url (format "%s : %s" text url)))))
       (format "No result for %s" term)))
 
 (defn handler [bot]
