@@ -8,6 +8,7 @@
   (or (-> (client/get (format "https://api.bitbucket.org/1.0/repositories/%s/%s/issues/%s"
                               account repo id)
                    {:basic-auth [user password]
+                    :throw-exceptions false
                     :as :json})
           :body
           ((fn [issue]

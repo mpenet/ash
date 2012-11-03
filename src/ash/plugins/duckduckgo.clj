@@ -1,26 +1,27 @@
-(ns ash.plugins.google
+(ns ash.plugins.duckduckgo
   (:require
    [ash.bot :as irc]
    [clj-http.client :as client]))
 
-(defn ask-google
+(defn search
   [term]
-  (or (-> (client/get "http://ajax.googleapis.com/ajax/services/search/web"
-                   {:query-params {"v" "1.0" "q" term}
+  (or (-> (client/get "http://api.duckduckgo.com/"
+                   {:query-params {"q" term
+                                   "format" "json"}
                     :throw-exceptions false
                     :as :json})
        :body
-       :responseData
-       :results
+       :Results
        first
-       :unescapedUrl)
+       ((fn [{text :Text url :FirstURL}]
+          (format "%s : %s" text url))))
       (format "No result for %s" term)))
 
 (defn handler [bot]
   (irc/listen bot :on-message
               (fn [m _]
-                (when-let [t (second (re-find #"^\?g\W+(.+)" (:content m)))]
+                (when-let [t (second (re-find #"^\?d\W+(.+)" (:content m)))]
                   (irc/send-message bot
                                     (:channel m)
-                                    (ask-google t)
+                                    (search t)
                                     true)))))

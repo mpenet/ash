@@ -7,6 +7,7 @@
   [term]
   (or (-> (client/get "http://www.omdbapi.com/?"
                    {:query-params {"t" term}
+                    :throw-exceptions false
                     :as :json})
        :body
        ((fn [{title :Title
