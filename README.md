@@ -1,7 +1,7 @@
 # Ash
 
 <img src="http://cloud.github.com/downloads/mpenet/ash/logo.jpg"
- alt="Cute bot" title="Cute bot" align="right" style="margin-left: 20px;" />
+ alt="Cute bot" title="Cute bot" align="right"  />
 
 > It's a robot. Ash is a god damn robot!
 
