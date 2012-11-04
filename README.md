@@ -17,7 +17,7 @@ examples. You can add your own event listeners by extending the `ash.bot/listen`
 multimethod.
 
 See [echoweb](https://github.com/mpenet/ash/blob/master/src/ash/plugins/echoweb.clj)
-for a basic example of webhook intergration,
+for a basic example of webhook integration,
 
 ## Installation
 
