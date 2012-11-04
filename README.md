@@ -9,8 +9,14 @@ A simple IRC bot, based on pircbotx, started as a fork of clj-irc.
 
 ### Why another one?
 Because I am bored, with the flu, and need one that
-works with grove.io and that is stupidly simple and extensible.
+works with grove.io and that is very simple, extensible and supports webhooks.
 
+See [plugins](https://github.com/mpenet/ash/tree/master/src/ash/plugins) for
+examples. You can add your own event listeners by extending the `ash.irc/listen`
+multimethod.
+
+See [echoweb](https://github.com/mpenet/ash/blob/master/src/ash/plugins/echoweb.clj)
+for a basic example of webhook intergration,
 
 ## Installation
 
@@ -22,9 +28,12 @@ works with grove.io and that is stupidly simple and extensible.
 
 ```clojure
 (require
-  [ash.bot :as irc]
-  [ash.plugins.clojure :as clj]
-  [ash.plugins.google :as goog])
+  '[ash.bot :as irc]
+  '[ash.webhooks :as webhooks]
+
+  '[ash.plugins.clojure :as clj]
+  '[ash.plugins.google :as goog]
+  '[ash.plugins.echoweb :as echoweb])
 
 (-> (irc/make-bot :server-password "meh"
                   :nick "just-a-bot"
@@ -35,7 +44,10 @@ works with grove.io and that is stupidly simple and extensible.
                   :channels ["#foo" "#bar"]
                   :auto-reconnect true)
     clj/handler
-    goog/handler)
+    goog/handler
+    echoweb/handler)
+
+(webhooks/start-server)
 ```
 
 ## License

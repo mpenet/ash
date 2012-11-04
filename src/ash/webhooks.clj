@@ -1,4 +1,4 @@
-(ns ash.web
+(ns ash.webhooks
   (:require
    [ash.bot :as irc]
    [aleph.http :as http]
