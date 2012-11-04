@@ -4,6 +4,8 @@
                  [org.clojure/tools.logging "0.2.3"]
                  [org.pircbotx/pircbotx "1.7"]
 
+                 [aleph "0.3.0-beta5"]
+
                  ;; plugins deps
                  [clojail "1.0.3"]
                  [clj-http "0.5.7"]
