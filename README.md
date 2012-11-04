@@ -13,7 +13,7 @@ Because I need one that works with grove.io, that is very simple,
 extensible and supports webhooks.
 
 See [plugins](https://github.com/mpenet/ash/tree/master/src/ash/plugins) for
-examples. You can add your own event listeners by extending the `ash.irc/listen`
+examples. You can add your own event listeners by extending the `ash.bot/listen`
 multimethod.
 
 See [echoweb](https://github.com/mpenet/ash/blob/master/src/ash/plugins/echoweb.clj)
