@@ -22,7 +22,7 @@
                           (merge {:port 9999 :host "localhost"}
                                  (into {} options))))
 
-(defmethod irc/listen :on-web-hook
+(defmethod irc/listen :on-webhook
   [bot _ method route handler]
   (register [method route handler])
   bot)
