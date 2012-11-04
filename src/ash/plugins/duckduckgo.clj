@@ -20,5 +20,5 @@
 (defn handler [bot]
   (irc/listen bot :on-message
               (fn [event]
-                (when-let [t (second (re-find #"^\?d\W+(.+)" (:content event)))]
+                (when-let [t (second (re-find #"^\?d\s+(.+)" (:content event)))]
                   (irc/reply bot event (search t) true)))))

@@ -24,12 +24,8 @@
   (irc/listen bot :on-message
               (fn [{:keys [content]
                     :as event}]
-                (when (re-find #"^\#.+" content)
+                (when-let [id (second (re-find #"^\#(.+)" content))]
                   (irc/reply bot
                              event
-                             (get-issue login
-                                        password
-                                        account
-                                        repo
-                                        (.substring content 1))
+                             (get-issue login password account repo id)
                              true)))))

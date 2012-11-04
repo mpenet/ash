@@ -24,16 +24,11 @@
                            :init '(defmacro doc [s]
                                     `(doc* (var ~s)))))
 
-(defn exec
-  [m]
-  (try (sb (read-string (.substring
-                         (:content m) 1)))
-       (catch Exception e e)))
-
 (defn handler [bot]
   (irc/listen bot :on-message
-              (fn [{:keys [content]
-                    :as event}]
-                (cond
-                  (re-find #"^," content)
-                  (irc/reply bot event (exec content) true)))))
+              (fn [event]
+                (when-let [c (second (re-find #"^,(.+)" (:content event)))]
+                  (irc/reply bot event
+                             (try (sb (read-string c))
+                                  (catch Exception e e))
+                             true)))))
