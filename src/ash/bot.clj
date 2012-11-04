@@ -3,13 +3,13 @@
    [clojure.string :as string]
    [clojure.tools.logging :as log])
   (:import
-   [org.pircbotx PircBotX User Channel]
-   [org.pircbotx.hooks ListenerAdapter Event]
+   [org.pircbotx PircBotX]
+   [org.pircbotx.hooks ListenerAdapter]
    [org.pircbotx.hooks.events MessageEvent PrivateMessageEvent]))
 
 (defn join-channels
   [^PircBotX bot channels]
-  (log/info (format "join %s" channels))
+  (log/info (format "Joining %s" channels))
   (doseq [chan channels]
     (.joinChannel bot chan))
   bot)
@@ -40,19 +40,19 @@
 
 (defn disconnect
   [^PircBotX bot]
-  (log/info "disconnect")
+  (log/info "Disconnecting")
   (.disconnect bot)
   bot)
 
 (defn reconnect
   [^PircBotX bot]
-  (log/info "reconnect")
+  (log/info "Reconnecting")
   (.reconnect bot)
   bot)
 
 (defn shutdown
   [^PircBotX bot]
-  (log/info "shutdown")
+  (log/info "Shutdown")
   (.shutdown bot)
   bot)
 

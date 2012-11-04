@@ -8,8 +8,9 @@
 A simple IRC bot, based on pircbotx, started as a fork of clj-irc.
 
 ### Why another one?
-Because I am bored, with the flu, and need one that
-works with grove.io and that is very simple, extensible and supports webhooks.
+
+Because I need one that works with grove.io, that is very simple,
+extensible and supports webhooks.
 
 See [plugins](https://github.com/mpenet/ash/tree/master/src/ash/plugins) for
 examples. You can add your own event listeners by extending the `ash.irc/listen`
