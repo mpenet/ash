@@ -10,11 +10,11 @@
 
 (defn handler [ch {:as request
                    :keys [request-method uri]}]
-  (doseq [[method route handler] @routes
-          :when (and (= request-method method)
-                     (re-find route uri))]
-    (handler request))
-  (lc/enqueue ch {:status 200}))
+  (let [hits (for [[method route handler] @routes
+                   :when (and (= request-method method)
+                              (re-find route uri))]
+               (handler request))]
+    (lc/enqueue ch {:status (if (not-empty hits) 200 404)})))
 
 (defn start-server
   [& options]
