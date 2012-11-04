@@ -32,10 +32,8 @@
 
 (defn handler [bot]
   (irc/listen bot :on-message
-              (fn [{:keys [content channel]} _]
+              (fn [{:keys [content]
+                    :as event}]
                 (cond
                   (re-find #"^," content)
-                  (irc/send-message bot
-                                    channel
-                                    (exec m)
-                                    true)))))
+                  (irc/reply bot event (exec content) true)))))

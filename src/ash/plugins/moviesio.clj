@@ -19,9 +19,6 @@
 
 (defn handler [bot]
   (irc/listen bot :on-message
-              (fn [{:keys [content channel]} _]
-                (when-let [t (second (re-find #"^\?m\W+(.+)" content))]
-                  (irc/send-message bot
-                                    channel
-                                    (search-movie t)
-                                    true)))))
+              (fn [event]
+                (when-let [t (second (re-find #"^\?m\W+(.+)" (:content event)))]
+                  (irc/reply bot event (search-movie t) true)))))

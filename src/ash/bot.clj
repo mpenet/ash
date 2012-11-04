@@ -5,7 +5,7 @@
   (:import
    [org.pircbotx PircBotX User Channel]
    [org.pircbotx.hooks ListenerAdapter Event]
-   [org.pircbotx.hooks.events MessageEvent]))
+   [org.pircbotx.hooks.events MessageEvent PrivateMessageEvent]))
 
 (defn join-channels
   [^PircBotX bot channels]
@@ -31,10 +31,12 @@
       (.sendMessage bot
                     target
                     (format-message m :prefix? prefix?)))
-    (.sendMessage bot
-                  target
-                  (format-message message :prefix? prefix?)))
+    (send-message bot target (string/split (str message) #"\n") prefix?))
   bot)
+
+(defn reply
+  [bot {:keys [channel user]} message & [prefix?]]
+  (send-message bot (or channel user) message prefix?))
 
 (defn disconnect
   [^PircBotX bot]
@@ -54,30 +56,49 @@
   (.shutdown bot)
   bot)
 
-(defn make-message
-  [^MessageEvent event]
-  {:user (.. event getUser getNick)
-   :channel (.. event getChannel getName)
-   :timestamp (.getTimestamp event)
-   :content  (.getMessage event)})
+(defprotocol PEventDecoder
+  (event->map [event]))
 
-(defn respond
-  [event message]
-  (doseq [part (string/split message #"\n")]
-    (.respond ^Event event part)))
+(extend-protocol PEventDecoder
+  MessageEvent
+  (event->map [event]
+    {:user (.. event getUser getNick)
+     :channel (.. event getChannel getName)
+     :timestamp (.getTimestamp event)
+     :content (.getMessage event)})
+
+  PrivateMessageEvent
+  (event->map [event]
+    {:user (.. event getUser getNick)
+     :timestamp (.getTimestamp event)
+     :content (.getMessage event)})
+
+  Object
+  (event->map [event] event))
 
 (defmulti listen (fn [bot listener-type & more]
                    listener-type))
 
-(defmethod listen :on-message
+(defmethod listen :on-channel-message
   [^PircBotX bot _ handler]
   (.. bot getListenerManager
       (addListener (proxy [ListenerAdapter] []
                      (onMessage [event]
-                       (let [message (make-message event)]
-                         (handler message (fn [response]
-                                            (respond event response))))))))
+                       (handler (event->map event))))))
   bot)
+
+(defmethod listen :on-private-message
+  [^PircBotX bot _ handler]
+  (.. bot getListenerManager
+      (addListener (proxy [ListenerAdapter] []
+                     (onPrivateMessage [event]
+                       (handler (event->map event))))))
+  bot)
+
+(defmethod listen :on-message
+  [^PircBotX bot _ handler]
+  (listen bot :on-channel-message handler)
+  (listen bot :on-private-message handler))
 
 (defmethod listen :on-disconnect
   [^PircBotX bot _ handler]

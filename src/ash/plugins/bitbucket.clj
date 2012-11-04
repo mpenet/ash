@@ -22,13 +22,14 @@
 
 (defn handler [bot {:keys [login password account repo]}]
   (irc/listen bot :on-message
-              (fn [{:keys [content channel]} _]
+              (fn [{:keys [content]
+                    :as event}]
                 (when (re-find #"^\#.+" content)
-                  (irc/send-message bot
-                                    channel
-                                    (get-issue login
-                                               password
-                                               account
-                                               repo
-                                               (.substring content 1))
-                                    true)))))
+                  (irc/reply bot
+                             event
+                             (get-issue login
+                                        password
+                                        account
+                                        repo
+                                        (.substring content 1))
+                             true)))))

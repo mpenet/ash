@@ -20,9 +20,6 @@
 
 (defn handler [bot]
   (irc/listen bot :on-message
-              (fn [{:keys [content channel]} _]
-                (when-let [t (second (re-find #"^\!b" content))]
-                  (irc/send-message bot
-                                    channel
-                                    (get-quote)
-                                    true)))))
+              (fn [event]
+                (when-let [t (second (re-find #"^\!b" (:content event)))]
+                  (irc/reply bot event (get-quote) true)))))

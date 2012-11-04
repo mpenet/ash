@@ -25,9 +25,6 @@
 
 (defn handler [bot]
   (irc/listen bot :on-message
-              (fn [{:keys [content channel]} _]
-                (when-let [t (second (re-find #"^\?i\W+(.+)" content))]
-                  (irc/send-message bot
-                                    channel
-                                    (search t)
-                                    true)))))
+              (fn [event]
+                (when-let [t (second (re-find #"^\?i\W+(.+)" (:content event)))]
+                  (irc/reply bot event (search t) true)))))
