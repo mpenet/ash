@@ -25,10 +25,9 @@
     (a (rand-int (count a)))))
 
 (defn handler
-  ""
   [bot]
-  (let [bot-name (.getName bot)]
+  (let [prn (re-pattern (format "%s\\s*\\?$" (.getName bot)))]
     (irc/listen bot :on-message
                 (fn [event]
-                  (when (.endsWith (:content event) (str bot-name "?"))
+                  (when (re-find ptn (:content event))
                     (irc/reply bot event (ask)))))))
