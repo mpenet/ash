@@ -132,7 +132,7 @@
            auto-reconnect true}
       :as options}]
   (let [bot (PircBotX.)]
-    (.setName bot nick)
+    (.setName bot name)
     (.setLogin bot name)
     (.setMessageDelay bot messages-delay)
     (.connect bot
