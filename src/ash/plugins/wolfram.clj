@@ -27,7 +27,9 @@
                    first
                    :content
                    first)]
-    (format "%s ⇒ http://www.wolframalpha.com/input/?i=%s" result term)
+    (format "%s ⇒ http://www.wolframalpha.com/input/?i=%s"
+            result
+            (java.net.URLEncoder/encode term))
     (format "No result for %s" term)))
 
 (defn handler [bot app-id]
