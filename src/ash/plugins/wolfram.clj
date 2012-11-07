@@ -27,7 +27,7 @@
                    first
                    :content
                    first)]
-    (format "%s ⇒ http://www.wolframalpha.com/input/?i=%s"
+    (format "%s\nhttp://www.wolframalpha.com/input/?i=%s"
             result
             (java.net.URLEncoder/encode term))
     (format "No result for %s" term)))
