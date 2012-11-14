@@ -63,7 +63,7 @@ Plugins are very easy to implement:
   [bot]
   (irc/listen bot :on-message
       (fn [event]
-          (when (re-find "sayhi" (:content event))
+          (when (re-find #"sayhi" (:content event))
               ;; reply knows about context form the event passed
               ;; (privmsg, channel msg, etc)
               (irc/reply bot event "Hello world"))))))
