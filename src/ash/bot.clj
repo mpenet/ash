@@ -28,9 +28,7 @@
   [^PircBotX bot ^String target message & [prefix?]]
   (if (sequential? message)
     (doseq [m message]
-      (.sendMessage bot
-                    target
-                    (format-message m :prefix? prefix?)))
+      (.sendMessage bot target (format-message m :prefix? prefix?)))
     (send-message bot target (string/split (str message) #"\n") prefix?))
   bot)
 

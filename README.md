@@ -1,3 +1,4 @@
+
 # Ash
 
 <img src="http://cloud.github.com/downloads/mpenet/ash/ash.jpg"
@@ -50,6 +51,42 @@ for a basic example of webhook integration.
 
 (webhooks/start-server)
 ```
+
+### Plugins
+
+Plugins are very easy to implement:
+
+```clojure
+(ns yourbot.plugins.meh)
+
+(defn handler
+  [bot]
+  (irc/listen bot :on-message
+      (fn [event]
+          (when (re-find "sayhi" (:content event))
+              ;; reply knows about context form the event passed
+              ;; (privmsg, channel msg, etc)
+              (irc/reply bot event "Hello world"))))))
+```
+
+For a webook:
+
+```clojure
+
+
+(defn handler [bot]
+  (irc/listen bot :on-webhook
+              :post #"^/say-hi"
+              (fn [request]
+                (irc/send-message "#somechan" "hohai")))
+
+  (irc/listen bot :on-webhook
+              :get #"^/say-hi-foo"
+              (fn [request]
+                (irc/send-message "foo" "hohai foo")))
+```
+
+
 
 ## License
 
