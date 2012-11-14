@@ -57,7 +57,8 @@ for a basic example of webhook integration.
 Plugins are very easy to implement:
 
 ```clojure
-(ns yourbot.plugins.meh)
+(ns yourbot.plugins.meh
+    (:require [ash.bot :as irc]))
 
 (defn handler
   [bot]
