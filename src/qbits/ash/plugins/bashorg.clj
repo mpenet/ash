@@ -1,6 +1,6 @@
-(ns ash.plugins.bashorg
+(ns qbits.ash.plugins.bashorg
   (:require
-   [ash.bot :as irc]
+   [qbits.ash.bot :as irc]
    [clj-http.client :as client])
   (:import [org.jsoup Jsoup]))
 

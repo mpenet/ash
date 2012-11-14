@@ -1,6 +1,6 @@
-(ns ash.plugins.moviesio
+(ns qbits.ash.plugins.moviesio
   (:require
-   [ash.bot :as irc]
+   [qbits.ash.bot :as irc]
    [clj-http.client :as client]))
 
 (defn search-movie

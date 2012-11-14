@@ -13,11 +13,11 @@ A simple IRC bot, based on pircbotx, started as a fork of clj-irc.
 Because I need one that works with grove.io, that is very simple,
 extensible and supports webhooks.
 
-See [plugins](https://github.com/mpenet/ash/tree/master/src/ash/plugins) for
-examples. You can add your own event listeners by extending the `ash.bot/listen`
+See [plugins](https://github.com/mpenet/ash/tree/master/src/qbits/ash/plugins) for
+examples. You can add your own event listeners by extending the `qbits.ash.bot/listen`
 multimethod.
 
-See [echoweb](https://github.com/mpenet/ash/blob/master/src/ash/plugins/echoweb.clj)
+See [echoweb](https://github.com/mpenet/ash/blob/master/src/qbits/ash/plugins/echoweb.clj)
 for a basic example of webhook integration.
 
 ## Installation
@@ -30,12 +30,12 @@ for a basic example of webhook integration.
 
 ```clojure
 (require
-  '[ash.bot :as irc]
-  '[ash.webhooks :as webhooks]
+  '[qbits.ash.bot :as irc]
+  '[qbits.ash.webhooks :as webhooks]
 
-  '[ash.plugins.clojure :as clj]
-  '[ash.plugins.google :as goog]
-  '[ash.plugins.echoweb :as echoweb])
+  '[qbits.ash.plugins.clojure :as clj]
+  '[qbits.ash.plugins.google :as goog]
+  '[qbits.ash.plugins.echoweb :as echoweb])
 
 (-> (irc/make-bot :server-password "meh"
                   :nick "just-a-bot"
@@ -58,7 +58,7 @@ Plugins are very easy to implement:
 
 ```clojure
 (ns yourbot.plugins.meh
-    (:require [ash.bot :as irc]))
+    (:require [qbits.ash.bot :as irc]))
 
 (defn handler
   [bot]

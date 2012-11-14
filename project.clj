@@ -9,6 +9,7 @@
                  ;; plugins deps
                  [clojail "1.0.3"]
                  [clj-http "0.5.7"]
-                 [org.jsoup/jsoup "1.6.3"]]
+                 [org.jsoup/jsoup "1.6.3"]
+                 [org.mapdb/mapdb "0.9-SNAPSHOT"]]
   ;; :warn-on-reflection true
   )

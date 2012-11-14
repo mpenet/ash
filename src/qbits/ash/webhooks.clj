@@ -1,4 +1,4 @@
-(ns ash.webhooks
+(ns qbits.ash.webhooks
   (:require
    [ash.bot :as irc]
    [aleph.http :as http]

@@ -1,6 +1,6 @@
-(ns ash.plugins.google
+(ns qbits.ash.plugins.google
   (:require
-   [ash.bot :as irc]
+   [qbits.ash.bot :as irc]
    [clj-http.client :as client]))
 
 (defn search

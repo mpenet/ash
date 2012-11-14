@@ -1,6 +1,6 @@
-(ns ash.plugins.askbot
+(ns qbits.ash.plugins.askbot
   (:require
-   [ash.bot :as irc]))
+   [qbits.ash.bot :as irc]))
 
 (def answers
   [["Hell no!"

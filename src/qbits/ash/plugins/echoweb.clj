@@ -1,5 +1,5 @@
-(ns ash.plugins.echoweb
-  (:require [ash.bot :as irc]))
+(ns qbits.ash.plugins.echoweb
+  (:require [qbits.ash.bot :as irc]))
 
 (defn handler [bot]
   (irc/listen bot :on-webhook

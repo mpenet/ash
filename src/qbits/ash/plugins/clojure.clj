@@ -1,6 +1,6 @@
-(ns ash.plugins.clojure
+(ns qbits.ash.plugins.clojure
   (:require
-   [ash.bot :as irc]
+   [qbits.ash.bot :as irc]
    [clojail.core :as jail-core]
    [clojail.testers :as jail-testers]
    [clojure.repl :as repl]

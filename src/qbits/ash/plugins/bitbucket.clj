@@ -1,6 +1,6 @@
-(ns ash.plugins.bitbucket
+(ns qbits.ash.plugins.bitbucket
   (:require
-   [ash.bot :as irc]
+   [qbits.ash.bot :as irc]
    [clj-http.client :as client]))
 
 (defn get-issue

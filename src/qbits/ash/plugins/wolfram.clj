@@ -1,6 +1,6 @@
-(ns ash.plugins.wolfram
+(ns qbits.ash.plugins.wolfram
   (:require
-   [ash.bot :as irc]
+   [qbits.ash.bot :as irc]
    [clj-http.client :as client]
    [clojure.xml :as xml]
    [clojure.zip :as zip]))

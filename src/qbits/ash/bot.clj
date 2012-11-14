@@ -1,4 +1,4 @@
-(ns ash.bot
+(ns qbits.ash.bot
   (:require
    [clojure.string :as string]
    [clojure.tools.logging :as log])

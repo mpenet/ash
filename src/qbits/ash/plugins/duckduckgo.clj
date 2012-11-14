@@ -1,6 +1,6 @@
-(ns ash.plugins.duckduckgo
+(ns qbits.ash.plugins.duckduckgo
   (:require
-   [ash.bot :as irc]
+   [qbits.ash.bot :as irc]
    [clj-http.client :as client]))
 
 (defn search

@@ -1,6 +1,6 @@
-(ns ash.plugins.imdb
+(ns qbits.ash.plugins.imdb
   (:require
-   [ash.bot :as irc]
+   [qbits.ash.bot :as irc]
    [clj-http.client :as client]))
 
 (defn search
