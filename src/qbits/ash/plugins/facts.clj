@@ -1,2 +1,2 @@
 (ns qbits.ash.plugins.facts
-  (:require [qbits.ash.bot :as irc]))
+  (:require [qbits.ash :as ash]))

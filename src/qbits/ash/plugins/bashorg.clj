@@ -1,6 +1,6 @@
 (ns qbits.ash.plugins.bashorg
   (:require
-   [qbits.ash.bot :as irc]
+   [qbits.ash :as ash]
    [clj-http.client :as client])
   (:import [org.jsoup Jsoup]))
 
@@ -19,7 +19,7 @@
       seq))
 
 (defn handler [bot]
-  (irc/listen bot :on-message
+  (ash/listen bot :on-message
               (fn [event]
                 (when-let [t (second (re-find #"^\!b" (:content event)))]
-                  (irc/reply bot event (get-quote) true)))))
+                  (ash/reply bot event (get-quote) true)))))

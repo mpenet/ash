@@ -23,21 +23,21 @@ for a basic example of webhook integration.
 ## Installation
 
 ```clojure
-[cc.qbits/ash "0.1.3"]
+[cc.qbits/ash "0.2.0"]
 ```
 
 ## Usage
 
 ```clojure
 (require
-  '[qbits.ash.bot :as irc]
+  '[qbits.ash :as ash]
   '[qbits.ash.webhooks :as webhooks]
 
   '[qbits.ash.plugins.clojure :as clj]
   '[qbits.ash.plugins.google :as goog]
   '[qbits.ash.plugins.echoweb :as echoweb])
 
-(-> (irc/make-bot :server-password "meh"
+(-> (ash/make-bot :server-password "meh"
                   :nick "just-a-bot"
                   :name "just-a-bot"
                   :password "1234"
@@ -58,16 +58,16 @@ Plugins are very easy to implement:
 
 ```clojure
 (ns yourbot.plugins.meh
-    (:require [qbits.ash.bot :as irc]))
+    (:require [qbits.ash :as ash]))
 
 (defn handler
   [bot]
-  (irc/listen bot :on-message
+  (ash/listen bot :on-message
       (fn [event]
           (when (re-find #"sayhi" (:content event))
               ;; reply knows about context form the event passed
               ;; (privmsg, channel msg, etc)
-              (irc/reply bot event "Hello world"))))))
+              (ash/reply bot event "Hello world"))))))
 ```
 
 For a webook:
@@ -76,15 +76,15 @@ For a webook:
 
 
 (defn handler [bot]
-  (irc/listen bot :on-webhook
+  (ash/listen bot :on-webhook
               :post #"^/say-hi"
               (fn [request]
-                (irc/send-message "#somechan" "hohai")))
+                (ash/send-message "#somechan" "hohai")))
 
-  (irc/listen bot :on-webhook
+  (ash/listen bot :on-webhook
               :get #"^/say-hi-foo"
               (fn [request]
-                (irc/send-message "foo" "hohai foo")))
+                (ash/send-message "foo" "hohai foo")))
 ```
 
 

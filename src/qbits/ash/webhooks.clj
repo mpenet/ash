@@ -1,6 +1,6 @@
 (ns qbits.ash.webhooks
   (:require
-   [ash.bot :as irc]
+   [qbits.ash :as ash]
    [aleph.http :as http]
    [lamina.core :as lc]))
 
@@ -22,7 +22,7 @@
                           (merge {:port 9999 :host "localhost"}
                                  (into {} options))))
 
-(defmethod irc/listen :on-webhook
+(defmethod ash/listen :on-webhook
   [bot _ method route handler]
   (register [method route handler])
   bot)

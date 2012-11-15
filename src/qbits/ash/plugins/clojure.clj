@@ -1,6 +1,6 @@
 (ns qbits.ash.plugins.clojure
   (:require
-   [qbits.ash.bot :as irc]
+   [qbits.ash :as ash]
    [clojail.core :as jail-core]
    [clojail.testers :as jail-testers]
    [clojure.repl :as repl]
@@ -25,10 +25,10 @@
                                     `(doc* (var ~s)))))
 
 (defn handler [bot]
-  (irc/listen bot :on-message
+  (ash/listen bot :on-message
               (fn [event]
                 (when-let [c (second (re-find #"^,(.+)" (:content event)))]
-                  (irc/reply bot event
+                  (ash/reply bot event
                              (try (sb (read-string c))
                                   (catch Exception e e))
                              true)))))

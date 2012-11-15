@@ -1,6 +1,6 @@
 (ns qbits.ash.plugins.moviesio
   (:require
-   [qbits.ash.bot :as irc]
+   [qbits.ash :as ash]
    [clj-http.client :as client]))
 
 (defn search-movie
@@ -18,7 +18,7 @@
       (format "No result for %s" title)))
 
 (defn handler [bot]
-  (irc/listen bot :on-message
+  (ash/listen bot :on-message
               (fn [event]
                 (when-let [t (second (re-find #"^\?m\s+(.+)" (:content event)))]
-                  (irc/reply bot event (search-movie t) true)))))
+                  (ash/reply bot event (search-movie t) true)))))

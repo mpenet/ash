@@ -1,6 +1,6 @@
 (ns qbits.ash.plugins.bitbucket
   (:require
-   [qbits.ash.bot :as irc]
+   [qbits.ash :as ash]
    [clj-http.client :as client]))
 
 (defn get-issue
@@ -21,11 +21,11 @@
       (format "No result for %s" id)))
 
 (defn handler [bot {:keys [login password account repo]}]
-  (irc/listen bot :on-message
+  (ash/listen bot :on-message
               (fn [{:keys [content]
                     :as event}]
                 (when-let [id (second (re-find #"^\#(.+)" content))]
-                  (irc/reply bot
+                  (ash/reply bot
                              event
                              (get-issue login password account repo id)
                              true)))))

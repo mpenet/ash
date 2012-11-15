@@ -1,6 +1,6 @@
 (ns qbits.ash.plugins.askbot
   (:require
-   [qbits.ash.bot :as irc]))
+   [qbits.ash :as ash]))
 
 (def answers
   [["Hell no!"
@@ -27,7 +27,7 @@
 (defn handler
   [bot]
   (let [ptn (re-pattern (format "%s\\s*\\?$" (.getName bot)))]
-    (irc/listen bot :on-message
+    (ash/listen bot :on-message
                 (fn [event]
                   (when (re-find ptn (:content event))
-                    (irc/reply bot event (ask)))))))
+                    (ash/reply bot event (ask)))))))

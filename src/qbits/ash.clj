@@ -1,4 +1,4 @@
-(ns qbits.ash.bot
+(ns qbits.ash
   (:require
    [clojure.string :as string]
    [clojure.tools.logging :as log])
@@ -142,5 +142,5 @@
     (when channels
       (join-channels bot channels))
     (when auto-reconnect
-      (ash.bot/auto-reconnect bot channels))
+      (ash/auto-reconnect bot channels))
     bot))
