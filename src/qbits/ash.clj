@@ -142,5 +142,5 @@
     (when channels
       (join-channels bot channels))
     (when auto-reconnect
-      (ash/auto-reconnect bot channels))
+      (qbits.ash/auto-reconnect bot channels))
     bot))
