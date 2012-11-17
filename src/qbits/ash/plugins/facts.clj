@@ -30,9 +30,20 @@
   ;; store
   (ash/listen bot :on-message
               (fn [event]
-                (when-let [fact (next (re-find #"^fact!! (.+): (.+)"
+                (when-let [fact (next (re-find #"^addfact! (.+): (.+)"
                                                (:content event)))]
                   (store/put! facts
                               (-> fact first make-id)
                               (second fact))
-                  (ash/reply bot event "Fact saved!")))))
+                  (ash/reply bot event "Understood!"))))
+
+  ;; remove
+  (ash/listen bot :on-message
+              (fn [event]
+                (when-let [fact (next (re-find #"^rmfact! (.+)"
+                                               (:content event)))]
+                  (let [id (-> fact first make-id) ]
+                    (if (store/exists? facts id)
+                      (store/del! facts id)
+                      (ash/reply bot event "I don't know what this means anymore.")
+                      (ash/reply bot event "I don't know about that, sorry.")))))))
