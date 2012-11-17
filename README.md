@@ -11,7 +11,7 @@ A simple IRC bot, based on pircbotx, started as a fork of clj-irc.
 ### Why another one?
 
 Because I need one that works with grove.io, that is very simple,
-extensible and supports webhooks.
+extensible, supports webhooks and has some simple persistance solution embedded.
 
 See [plugins](https://github.com/mpenet/ash/tree/master/src/qbits/ash/plugins) for
 examples. You can add your own event listeners by extending the `qbits.ash.bot/listen`
