@@ -5,6 +5,7 @@
 
 (defonce db (-> (DBMaker/newFileDB (java.io.File. "brain"))
                 .closeOnJvmShutdown
+                .compressionEnable
                 .make))
 
 (defprotocol PStore
