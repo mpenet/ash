@@ -31,8 +31,6 @@
   [trigger]
   (.get facts (make-id trigger)))
 
-(prn (fetch "test"))
-
 (defn handler
   [bot]
   ;;ask
