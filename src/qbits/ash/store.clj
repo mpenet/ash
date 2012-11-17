@@ -7,15 +7,11 @@
                 .make))
 
 (defprotocol PStore
-  (fetch [this id])
   (put! [this id value])
-  (del! [this] [this id])
-  (exists? [this id]))
+  (del! [this] [this id]))
 
 (extend-type java.util.AbstractMap
   PStore
-  (fetch [this id]
-    (.get this id))
 
   (put! [this id value]
     (.put this id value)
@@ -24,7 +20,4 @@
   (del!
     ([this] (.clear this))
     ([this id]
-       (.remove this id)))
-
-  (exists? [this id]
-    (.containsKey this id)))
+       (.remove this id))))

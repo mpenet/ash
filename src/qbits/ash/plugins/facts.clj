@@ -25,7 +25,7 @@
                                           (format "%s\\s*\\:(.+)"
                                                   (.getName bot)))
                                          (:content event)))]
-                  (when-let [value (store/fetch facts (make-id fact))]
+                  (when-let [value (get facts (make-id fact))]
                     (ash/reply bot event value true)))))
   ;; store
   (ash/listen bot :on-message
@@ -43,7 +43,7 @@
                 (when-let [fact (next (re-find #"^rmfact! (.+)"
                                                (:content event)))]
                   (let [id (-> fact first make-id) ]
-                    (if (store/exists? facts id)
+                    (if (contains? facts id)
                       (do (store/del! facts id)
                           (ash/reply bot event "I don't know what this means anymore."))
                       (ash/reply bot event "I don't know about that, sorry.")))))))
