@@ -1,10 +1,12 @@
 (ns qbits.ash.plugins.facts
   (:require
    [qbits.ash :as ash]
+   [qbits.ash.store :as store]
    [clojure.string :as string])
   (:import
-   [java.security MessageDigest]
-   [org.mapdb DB DBMaker]))
+   [java.security MessageDigest]))
+
+(defonce facts (.getTreeMap store/db "facts"))
 
 (defn make-id
   [fact]
@@ -13,18 +15,11 @@
                    (doto (MessageDigest/getInstance "MD5")
                      (.update (.getBytes (-> fact string/trim string/lower-case))))))))
 
-;; to be moved elsewhere if we need more of this
-(defonce db (-> (DBMaker/newFileDB (java.io.File. "brain"))
-                .closeOnJvmShutdown
-                .make))
-
-(defonce facts (.getTreeMap db "facts"))
-
 (defn put
   ""
   [trigger fact]
   (.put facts (make-id trigger) fact)
-  (.commit db))
+  (.commit store/db))
 
 (defn fetch
   ""
