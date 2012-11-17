@@ -31,6 +31,8 @@
   [trigger]
   (.get facts (make-id trigger)))
 
+(prn (fetch "test"))
+
 (defn handler
   [bot]
   ;;ask
@@ -41,7 +43,8 @@
                                           (format "%s\\s*\\:(.+)"
                                                   (.getName bot)))
                                          (:content event)))]
-                  (ash/reply bot event (fetch fact)))))
+                  (when-let [value (fetch fact)]
+                    (ash/reply bot event value)))))
   ;; store
   (ash/listen bot :on-message
               (fn [event]
