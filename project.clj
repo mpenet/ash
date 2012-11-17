@@ -1,4 +1,4 @@
-(defproject cc.qbits/ash "0.2.4"
+(defproject cc.qbits/ash "0.2.5-SNAPSHOT"
   :description "clojure irc client based on pircbotx, originally forked from clj-irc"
   :repositories [["sonatype" "https://oss.sonatype.org/content/repositories/snapshots/"]]
   :dependencies [[org.clojure/clojure "1.4.0"]

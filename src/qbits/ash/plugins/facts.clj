@@ -44,6 +44,6 @@
                                                (:content event)))]
                   (let [id (-> fact first make-id) ]
                     (if (store/exists? facts id)
-                      (store/del! facts id)
-                      (ash/reply bot event "I don't know what this means anymore.")
+                      (do (store/del! facts id)
+                          (ash/reply bot event "I don't know what this means anymore."))
                       (ash/reply bot event "I don't know about that, sorry.")))))))
