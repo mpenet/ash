@@ -46,7 +46,7 @@
   ;; store
   (ash/listen bot :on-message
               (fn [event]
-                (when-let [fact (next (re-find #"^fact!!(.+) (.+)"))]
+                (when-let [fact (next (re-find #"^fact!! (.+): (.+)"))]
                   (put (first fact)
                        (second fact))
                   (ash/reply bot event "Fact saved!")))))
