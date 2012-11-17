@@ -31,6 +31,9 @@
   [trigger]
   (.get facts (make-id trigger)))
 
+
+
+
 (defn handler
   [bot]
   ;;ask
@@ -47,5 +50,6 @@
   (ash/listen bot :on-message
               (fn [event]
                 (when-let [fact (re-find #"^fact!!(.+) (.+)")]
-                  (ash/reply bot event (put (first fact)
-                                            (second fact)))))))
+                  (put (first fact)
+                       (second fact))
+                  (ash/reply bot event "Fact saved!")))))
