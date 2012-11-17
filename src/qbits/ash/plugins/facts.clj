@@ -15,17 +15,6 @@
                    (doto (MessageDigest/getInstance "MD5")
                      (.update (.getBytes (-> fact string/trim string/lower-case))))))))
 
-(defn put
-  ""
-  [trigger fact]
-  (.put facts (make-id trigger) fact)
-  (.commit store/db))
-
-(defn fetch
-  ""
-  [trigger]
-  (.get facts (make-id trigger)))
-
 (defn handler
   [bot]
   ;;ask
@@ -36,13 +25,14 @@
                                           (format "%s\\s*\\:(.+)"
                                                   (.getName bot)))
                                          (:content event)))]
-                  (when-let [value (fetch fact)]
+                  (when-let [value (store/fetch facts (make-id fact))]
                     (ash/reply bot event value true)))))
   ;; store
   (ash/listen bot :on-message
               (fn [event]
                 (when-let [fact (next (re-find #"^fact!! (.+): (.+)"
                                                (:content event)))]
-                  (put (first fact)
-                       (second fact))
+                  (store/put! facts
+                              (-> fact first make-id)
+                              (second fact))
                   (ash/reply bot event "Fact saved!")))))
