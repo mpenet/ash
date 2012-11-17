@@ -42,7 +42,7 @@
                                                   (.getName bot)))
                                          (:content event)))]
                   (when-let [value (fetch fact)]
-                    (ash/reply bot event value)))))
+                    (ash/reply bot event value true)))))
   ;; store
   (ash/listen bot :on-message
               (fn [event]
