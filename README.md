@@ -23,7 +23,7 @@ for a basic example of webhook integration.
 ## Installation
 
 ```clojure
-[cc.qbits/ash "0.2.2"]
+[cc.qbits/ash "0.2.3"]
 ```
 
 ## Usage
