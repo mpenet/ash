@@ -25,8 +25,10 @@
                                           (format "%s\\s*\\:(.+)"
                                                   (.getName bot)))
                                          (:content event)))]
-                  (when-let [value (get facts (make-id fact))]
-                    (ash/reply bot event value true)))))
+
+                  (ash/reply bot event
+                             (get facts (make-id fact) "I dont know about that.")
+                             true))))
   ;; store
   (ash/listen bot :on-message
               (fn [event]

@@ -18,6 +18,7 @@
     (.commit db))
 
   (del!
-    ([this] (.clear this))
+    ([this]
+       (.clear this))
     ([this id]
        (.remove this id))))
