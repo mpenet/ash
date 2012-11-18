@@ -32,11 +32,11 @@
   ;; store
   (ash/listen bot :on-message
               (fn [event]
-                (when-let [fact (next (re-find #"^addfact! (.+): (.+)"
+                (when-let [fact (next (re-find #"^addfact! (.+):(.+)"
                                                (:content event)))]
                   (store/put! facts
                               (-> fact first make-id)
-                              (second fact))
+                              (string/trim (second fact)))
                   (ash/reply bot event "Understood!"))))
 
   ;; remove
