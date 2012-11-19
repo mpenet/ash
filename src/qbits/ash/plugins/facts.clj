@@ -25,14 +25,13 @@
                                           (format "%s\\s*\\:(.+)"
                                                   (.getName bot)))
                                          (:content event)))]
-
                   (ash/reply bot event
                              (get facts (make-id fact) "I dont know about that.")
                              true))))
   ;; store
   (ash/listen bot :on-message
               (fn [event]
-                (when-let [fact (next (re-find #"^addfact! (.+):(.+)"
+                (when-let [fact (next (re-find #"^!addfact (.+):(.+)"
                                                (:content event)))]
                   (store/put! facts
                               (-> fact first make-id)
@@ -42,7 +41,7 @@
   ;; remove
   (ash/listen bot :on-message
               (fn [event]
-                (when-let [fact (next (re-find #"^rmfact! (.+)"
+                (when-let [fact (next (re-find #"^!rmfact (.+)"
                                                (:content event)))]
                   (let [id (-> fact first make-id) ]
                     (if (contains? facts id)
