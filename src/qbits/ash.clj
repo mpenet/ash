@@ -107,18 +107,36 @@
   bot)
 
 (defn auto-reconnect
-  [^PircBotX bot channels & {:keys [max-tries]
-                             :or {max-tries 5}}]
+  "The retries options is a vector of pairs where the first element is
+  the sleep time in ms and the second element is the amount of times
+  to repeat this stage, if the repeat value is -1 this means try forever.
+Once reconnected it resets"
+  [^PircBotX bot channels & {:keys [retries]
+                             :or {retries [[100 5]
+                                           [500 5]
+                                           [1500 5]
+                                           [15000 5]
+                                           [60000 -1]]}}]
   (let [reconnect-fn #(try (reconnect bot)
                            (join-channels bot channels)
-                           (catch Exception _ nil))]
+                           (catch Exception e
+                             (log/warn (str e))))]
     (listen bot :on-disconnect
             (fn [event]
-              (loop [times max-tries]
-                (when (and (nil? (reconnect-fn))
-                           (pos? times))
-                  (recur (dec times)))))))
-  bot)
+              (loop [retries retries]
+                (let [[[wait-ms repeat-n] & more] retries]
+                  (java.lang.Thread/sleep wait-ms)
+                  (when (nil? (reconnect-fn))
+                    (cond
+                      (= repeat-n -1)
+                      (recur retries)
+
+                      (> (dec repeat-n) 0)
+                      (recur (update-in retries [0 1] dec))
+
+                      (= 0 (dec repeat-n))
+                      (when-let [nr (subvec retries 1)]
+                        (recur nr))))))))))
 
 (defn make-bot
   [& {:keys [nick name password host port server-password messages-delay
