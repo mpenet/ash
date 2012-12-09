@@ -134,9 +134,9 @@ Once reconnected it resets"
                       (> (dec repeat-n) 0)
                       (recur (update-in retries [0 1] dec))
 
-                      (= 0 (dec repeat-n))
-                      (when-let [nr (subvec retries 1)]
-                        (recur nr))))))))))
+                      (= 0 (and (dec repeat-n)
+                                (> (count retries) 1)))
+                      (recur (subvec retries 1))))))))))
 
 (defn make-bot
   [& {:keys [nick name password host port server-password messages-delay
