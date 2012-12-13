@@ -87,7 +87,7 @@ For a webook:
                 (ash/send-message "foo" "hohai foo")))
 ```
 
-### Clojail note (via `clojure` plugin)
+### Clojure plugin: clojail sandboxing
 
 Because [clojail](https://github.com/flatland/clojail) employs the
 JVM's built in sandboxing, you'll need to have a ~/.java.policy file
