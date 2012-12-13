@@ -87,7 +87,14 @@ For a webook:
                 (ash/send-message "foo" "hohai foo")))
 ```
 
+### Clojail note (via `clojure` plugin)
 
+Because [clojail](https://github.com/flatland/clojail) employs the
+JVM's built in sandboxing, you'll need to have a ~/.java.policy file
+to define permissions for your own code. If you don't do this, you'll
+get security exceptions.
+
+[You can find an example here](https://github.com/flatland/clojail/blob/master/example.policy).
 
 ## License
 
