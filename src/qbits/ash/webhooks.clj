@@ -1,26 +1,25 @@
 (ns qbits.ash.webhooks
   (:require
    [qbits.ash :as ash]
-   [aleph.http :as http]
-   [lamina.core :as lc]))
+   [ring.adapter.jetty :as http]))
 
 (defonce routes (atom []))
 
 (def register (partial swap! routes conj))
 
-(defn handler [ch {:as request
-                   :keys [request-method uri]}]
+(defn handler [{:as request
+                :keys [request-method uri]}]
   (let [hits (for [[method route handler] @routes
                    :when (and (= request-method method)
                               (re-find route uri))]
                (handler request))]
-    (lc/enqueue ch {:status (if (not-empty hits) 200 404)})))
+    {:status (if (not-empty hits) 200 404)}))
 
 (defn start-server
   [& options]
-  (http/start-http-server handler
+  (future (http/run-jetty handler
                           (merge {:port 9999 :host "localhost"}
-                                 (into {} options))))
+                                 (into {} options)))))
 
 (defmethod ash/listen :on-webhook
   [bot _ method route handler]
