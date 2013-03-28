@@ -6,7 +6,7 @@
                  [org.pircbotx/pircbotx "1.8"]
 
                  ;; plugins deps
-                 [clojail "1.0.3"]
+                 [clojail "1.0.6"]
                  [ring "1.1.8"]
                  [clj-http "0.7.0"]
                  [org.jsoup/jsoup "1.6.3"]
