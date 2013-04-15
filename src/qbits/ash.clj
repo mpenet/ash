@@ -140,14 +140,16 @@ Once reconnected it resets"
 
 (defn make-bot
   [& {:keys [nick name password host port server-password messages-delay
-             channels auto-reconnect]
+             channels auto-reconnect verbose]
       :or {nick "ash"
            name "ash"
            port 6667
            messages-delay 1000
-           auto-reconnect true}
+           auto-reconnect true
+           verbose false}
       :as options}]
   (let [bot (PircBotX.)]
+    (.setVerbose verbose)
     (.setName bot name)
     (.setLogin bot name)
     (.setMessageDelay bot messages-delay)
