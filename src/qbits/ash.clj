@@ -149,7 +149,7 @@ Once reconnected it resets"
            verbose false}
       :as options}]
   (let [bot (PircBotX.)]
-    (.setVerbose verbose)
+    (.setVerbose bot verbose)
     (.setName bot name)
     (.setLogin bot name)
     (.setMessageDelay bot messages-delay)
