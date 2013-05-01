@@ -20,10 +20,7 @@
   ;;ask
   (ash/listen bot :on-message
               (fn [event]
-                (when-let [fact (second (re-find
-                                         (re-pattern
-                                          (format "%s\\s*\\:(.+)"
-                                                  (.getName bot)))
+                (when-let [fact (second (re-find #"~(.+)"
                                          (:content event)))]
                   (ash/reply bot event
                              (get facts (make-id fact) "I dont know about that.")
